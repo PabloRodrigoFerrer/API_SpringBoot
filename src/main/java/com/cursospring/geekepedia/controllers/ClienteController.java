@@ -37,4 +37,50 @@ public class ClienteController {
         listaClientes.add(cliente);
         return cliente;
     }
+
+    @PutMapping("/editar-cliente")
+    public Cliente putCliente(@RequestBody Cliente cliente){
+        for (Cliente c : listaClientes){
+            if (c.getId() == cliente.getId()){
+                c.setNombre(cliente.getNombre());
+                c.setNombreUsuario(cliente.getNombreUsuario());
+                c.setContrasena(cliente.getContrasena());
+
+                return cliente;
+            }
+        }
+        return cliente;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
