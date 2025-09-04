@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
+@RequestMapping("/clientes")
 public class ClienteController {
 
     private List<Cliente> listaClientes = new ArrayList<>(Arrays.asList(
@@ -17,12 +18,14 @@ public class ClienteController {
             new Cliente("Virginia", "virgiLaOne", "laOne23", 22)
     ));
 
-    @GetMapping("/clientes")
+    @RequestMapping (method = RequestMethod.GET)
+    //@GetMapping
     public List<Cliente> getClientes() {
         return listaClientes;
     }
 
-    @GetMapping("/clientes/{nombre}")
+    @RequestMapping( value = "{nombre}", method = RequestMethod.GET)
+    //@GetMapping("/{nombre}")
     public Cliente getCliente(@PathVariable String nombre) {
         for (Cliente c : listaClientes) {
             if (c.getNombre().equalsIgnoreCase(nombre)) {
@@ -32,13 +35,13 @@ public class ClienteController {
         return null;
     }
 
-    @PostMapping("/agregar-cliente")
+    @PostMapping
     public Cliente postCliente(@RequestBody Cliente cliente){
         listaClientes.add(cliente);
         return cliente;
     }
 
-    @PutMapping("/editar-cliente")
+    @PutMapping
     public Cliente putCliente(@RequestBody Cliente cliente){
         for (Cliente c : listaClientes){
             if (c.getId() == cliente.getId()){
@@ -46,17 +49,38 @@ public class ClienteController {
                 c.setNombreUsuario(cliente.getNombreUsuario());
                 c.setContrasena(cliente.getContrasena());
 
-                return cliente;
+                return c;
             }
         }
         return cliente;
     }
 
-    @DeleteMapping("/eliminar-cliente/{id}")
+    @DeleteMapping("/{id}")
     public Cliente deleteCliente (@PathVariable int id){
         for (Cliente c : listaClientes){
             if (c.getId() == id){
                 listaClientes.remove(c);
+
+                return c;
+            }
+        }
+        return null;
+    }
+
+    @PatchMapping
+    public Cliente patchCliente(@RequestBody Cliente cliente){
+        for (Cliente c : listaClientes){
+            if (c.getId() == cliente.getId()){
+
+                if (cliente.getNombre() != null){
+                    c.setNombre(cliente.getNombre());
+                }
+                if (cliente.getNombreUsuario() != null){
+                    c.setNombreUsuario(cliente.getNombreUsuario());
+                }
+                if (cliente.getContrasena() != null){
+                    c.setContrasena(cliente.getContrasena());
+                }
 
                 return c;
             }
