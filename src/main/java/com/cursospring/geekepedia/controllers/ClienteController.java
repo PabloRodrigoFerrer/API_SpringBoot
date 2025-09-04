@@ -2,6 +2,9 @@ package com.cursospring.geekepedia.controllers;
 
 
 import com.cursospring.geekepedia.dominio.Cliente;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,55 +23,55 @@ public class ClienteController {
 
     @RequestMapping (method = RequestMethod.GET)
     //@GetMapping
-    public List<Cliente> getClientes() {
-        return listaClientes;
+    public ResponseEntity<List<Cliente>> getClientes() {
+        return ResponseEntity.ok(listaClientes);
     }
 
     @RequestMapping( value = "{nombre}", method = RequestMethod.GET)
     //@GetMapping("/{nombre}")
-    public Cliente getCliente(@PathVariable String nombre) {
+    public ResponseEntity<?> getCliente(@PathVariable String nombre) {
         for (Cliente c : listaClientes) {
             if (c.getNombre().equalsIgnoreCase(nombre)) {
-                return c;
+                return ResponseEntity.ok(c);
             }
         }
-        return null;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró ningún usuario con el nombre: " + nombre);
     }
 
     @PostMapping
-    public Cliente postCliente(@RequestBody Cliente cliente){
+    public ResponseEntity<?> postCliente(@RequestBody Cliente cliente){
         listaClientes.add(cliente);
-        return cliente;
+        return ResponseEntity.ok("Agregado correctamente: " + cliente.toString());
     }
 
     @PutMapping
-    public Cliente putCliente(@RequestBody Cliente cliente){
+    public ResponseEntity<?> putCliente(@RequestBody Cliente cliente){
         for (Cliente c : listaClientes){
             if (c.getId() == cliente.getId()){
                 c.setNombre(cliente.getNombre());
                 c.setNombreUsuario(cliente.getNombreUsuario());
                 c.setContrasena(cliente.getContrasena());
 
-                return c;
+                return ResponseEntity.ok("Cliente: " + c.getNombreUsuario() + " modificado exitosamente");
             }
         }
-        return cliente;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró el ID: " + cliente.getId());
     }
 
     @DeleteMapping("/{id}")
-    public Cliente deleteCliente (@PathVariable int id){
+    public ResponseEntity<?> deleteCliente (@PathVariable int id){
         for (Cliente c : listaClientes){
             if (c.getId() == id){
                 listaClientes.remove(c);
 
-                return c;
+                return ResponseEntity.ok(c);
             }
         }
-        return null;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró el ID: " + id);
     }
 
     @PatchMapping
-    public Cliente patchCliente(@RequestBody Cliente cliente){
+    public ResponseEntity<?> patchCliente(@RequestBody Cliente cliente){
         for (Cliente c : listaClientes){
             if (c.getId() == cliente.getId()){
 
@@ -82,10 +85,10 @@ public class ClienteController {
                     c.setContrasena(cliente.getContrasena());
                 }
 
-                return c;
+                return ResponseEntity.ok("Cliente: " + cliente.getNombreUsuario() + " modificado exitosamente.");
             }
         }
-        return null;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ID de cliente no encontrada: " + cliente.getId());
     }
 }
 

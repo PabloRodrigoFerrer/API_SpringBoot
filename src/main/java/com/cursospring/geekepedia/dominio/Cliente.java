@@ -16,6 +16,16 @@ public class Cliente {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "nombre='" + nombre + '\'' +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", contrasena='" + contrasena + '\'' +
+                ", id=" + id +
+                '}';
+    }
+
     public String getNombre() {
         return nombre;
     }
