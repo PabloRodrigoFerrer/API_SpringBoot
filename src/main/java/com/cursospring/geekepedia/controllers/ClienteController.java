@@ -2,11 +2,14 @@ package com.cursospring.geekepedia.controllers;
 
 
 import com.cursospring.geekepedia.dominio.Cliente;
+import jakarta.servlet.Servlet;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,13 +38,20 @@ public class ClienteController {
                 return ResponseEntity.ok(c);
             }
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró ningún usuario con el nombre: " + nombre);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("No se encontró ningún usuario con el nombre: " + nombre);
     }
 
     @PostMapping
     public ResponseEntity<?> postCliente(@RequestBody Cliente cliente){
         listaClientes.add(cliente);
-        return ResponseEntity.ok("Agregado correctamente: " + cliente.toString());
+
+        URI locacion = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{nombre}")
+                .buildAndExpand(cliente.getNombre()).toUri();
+
+        return ResponseEntity.created(locacion).build();
     }
 
     @PutMapping
@@ -52,10 +62,10 @@ public class ClienteController {
                 c.setNombreUsuario(cliente.getNombreUsuario());
                 c.setContrasena(cliente.getContrasena());
 
-                return ResponseEntity.ok("Cliente: " + c.getNombreUsuario() + " modificado exitosamente");
+                return ResponseEntity.noContent().build();
             }
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró el ID: " + cliente.getId());
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
@@ -64,7 +74,7 @@ public class ClienteController {
             if (c.getId() == id){
                 listaClientes.remove(c);
 
-                return ResponseEntity.ok(c);
+                return ResponseEntity.noContent().build();
             }
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró el ID: " + id);
@@ -85,7 +95,7 @@ public class ClienteController {
                     c.setContrasena(cliente.getContrasena());
                 }
 
-                return ResponseEntity.ok("Cliente: " + cliente.getNombreUsuario() + " modificado exitosamente.");
+                return ResponseEntity.ok("Id cliente: " + cliente.getId() + " modificado exitosamente.");
             }
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ID de cliente no encontrada: " + cliente.getId());
