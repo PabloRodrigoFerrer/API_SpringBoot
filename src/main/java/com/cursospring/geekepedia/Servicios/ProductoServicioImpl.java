@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class ProductoServicioImpl {
+public class ProductoServicioImpl implements ProductoServicio {
 
     private List<Producto> listaProductos = new ArrayList<>(Arrays.asList(
         new Producto(1,"Laptop", 1255.5, 10),
@@ -17,6 +17,7 @@ public class ProductoServicioImpl {
         new Producto(4,"Smartwatch", 90.99, 30)
     ));
 
+    @Override
     public List<Producto> getListaProductos() {
         return listaProductos;
     }
