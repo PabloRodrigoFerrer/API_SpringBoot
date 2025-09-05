@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "nombre": "Laptop gaming",
+    "precio": 1255.5,
+    "cantidad": 10
+  },
+  {
+    "id": 2,
+    "nombre": "Celular samsung",
+    "precio": 553.8,
+    "cantidad": 12
+  },
+  {
+    "id": 3,
+    "nombre": "Televisor smart",
+    "precio": 280.5,
+    "cantidad": 5
+  },
+  {
+    "id": 4,
+    "nombre": "Smartwatch apple",
+    "precio": 90.99,
+    "cantidad": 30
+  }
+]
