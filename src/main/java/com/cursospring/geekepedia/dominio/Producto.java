@@ -16,6 +16,9 @@ public class Producto {
         this.cantidad = cantidad;
     }
 
+    public Producto() {
+    }
+
     public Integer getId() {
         return id;
     }
