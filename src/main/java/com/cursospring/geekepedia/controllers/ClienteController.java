@@ -13,6 +13,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/clientes")
@@ -38,6 +39,7 @@ public class ClienteController {
                 return ResponseEntity.ok(c);
             }
         }
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("No se encontró ningún usuario con el nombre: " + nombre);
     }
