@@ -1,13 +1,15 @@
 package com.cursospring.geekepedia.Servicios;
 
 import com.cursospring.geekepedia.dominio.Producto;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Service
+@Service("lista")
+@ConditionalOnProperty(name = "service.products", havingValue = "lista")
 public class ProductoServicioImpl implements ProductoServicio {
 
     private List<Producto> listaProductos = new ArrayList<>(Arrays.asList(

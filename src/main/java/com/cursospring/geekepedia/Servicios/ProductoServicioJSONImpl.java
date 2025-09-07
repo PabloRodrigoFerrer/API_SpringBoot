@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Primary
-@Service
+@Service("json")
 public class ProductoServicioJSONImpl implements ProductoServicio {
 
     List<Producto> listaProductos;
