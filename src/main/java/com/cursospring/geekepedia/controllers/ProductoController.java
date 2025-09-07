@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductoController {
 
     @Autowired
-    // @Qualifier("lista")
+    @Qualifier("lista")
     private ProductoServicio productoServicio;
 
     @GetMapping

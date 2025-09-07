@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service("lista")
-@ConditionalOnProperty(name = "service.products", havingValue = "lista")
+//@ConditionalOnProperty(name = "service.products", havingValue = "lista")
 public class ProductoServicioImpl implements ProductoServicio {
 
     private List<Producto> listaProductos = new ArrayList<>(Arrays.asList(
